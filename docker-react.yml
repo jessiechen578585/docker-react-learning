@@ -1,0 +1,35 @@
+name: Docker React CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      docker: 
+        image: docker:stable-dind
+        options: --privileged # Required for Docker-in-Docker
+
+    steps:
+      # Step 1: Check out the code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Docker
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+      # Step 3: Build the Docker image
+      - name: Build Docker Image
+        run: docker build -t jessiechenqazwsx/docker-react-learning -f Dockerfile.dev .
+
+      # Step 4: Run tests inside the container
+      - name: Run Tests
+        run: docker run -e CI=true jessiechenqazwsx/docker-react-learning npm run test -- --coverage
