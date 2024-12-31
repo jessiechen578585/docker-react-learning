@@ -4,18 +4,6 @@ services:
   app:
     build: 
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
-    volumes:
-      - /app/node_modules
-      - .:/app
-# solution 1
-#   tests:
-#     build: 
-#       context: .
-#       dockerfile: Dockerfile.dev
-#     volumes:
-#       - /app/node_modules
-#       - .:/app
-#     command: ["npm", "run", "test"]
+      - "8080:8080"
