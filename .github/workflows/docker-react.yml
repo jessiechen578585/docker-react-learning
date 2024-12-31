@@ -37,7 +37,7 @@ jobs:
       # install eb cli
       - name: Install EB CLI
         run: |
-          curl https://raw.githubusercontent.com/aws/aws-eb-cli-setup/main/install.sh | sh
+          curl https://raw.githubusercontent.com/aws/aws-eb-cli-setup/main/install.sh | bash
 
       # Step 5: Deploy the built image to Elastic Beanstalk using eb cli
       - name: Deploy to Elastic Beanstalk
