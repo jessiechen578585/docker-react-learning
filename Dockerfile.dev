@@ -1,0 +1,31 @@
+FROM node:16
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+CMD ["npm", "run", "start"]
+
+# docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app [image id]
+# Explanation of the Flags:
+
+#     -p 3000:3000: Maps port 3000 in the container to port 3000 on the host.
+#     -v /app/node_modules: Ensures the container uses its internal node_modules directory, avoiding potential overwrites by the local directory mount.
+#     -v $(pwd):/app: Mounts the current directory into the container at /app.
+
+
+        # -v /app/node_modules
+
+        # This volume is used to exclude or isolate the node_modules directory inside the container from being overwritten by the bind mount defined in the second -v option.
+        # Without this, the node_modules folder inside the container (created during the image build process) would be replaced by an empty or non-existent node_modules folder from the host.
+        # By declaring it as a volume, Docker retains the node_modules directory inside the container even if the host's bind mount (-v $(pwd):/app) is applied.
+        # -v $(pwd):/app
+
+        # This bind mount maps the current directory on the host machine ($(pwd)) to /app in the container.
+        # Purpose:
+        # Allows the container to work with the live source code on your host machine.
+        # Changes you make to your code locally will immediately reflect inside the container.
