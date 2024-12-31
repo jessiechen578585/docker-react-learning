@@ -33,13 +33,21 @@ jobs:
       # Step 4: Run tests inside the container
       - name: Run Tests
         run: docker run -e CI=true jessiechenqazwsx/docker-react-learning npm run test -- --coverage
-      
-      # install eb cli
-      - name: Install EB CLI
-        run: |
-          curl https://raw.githubusercontent.com/aws/aws-eb-cli-setup/main/install.sh | bash
 
-      # Step 5: Deploy the built image to Elastic Beanstalk using eb cli
+      # Step 5: Install Python and pip
+      - name: Install Python and pip
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3 python3-pip
+
+      # Step 6: Install AWS Elastic Beanstalk CLI
+      - name: Install Elastic Beanstalk CLI
+        run: |
+          pip3 install awsebcli --upgrade --user
+          echo "export PATH=$PATH:$HOME/.local/bin" >> $GITHUB_ENV
+          source $GITHUB_ENV
+
+      # Step 7: Deploy the built image to Elastic Beanstalk using eb cli
       - name: Deploy to Elastic Beanstalk
         run: |
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
