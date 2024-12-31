@@ -1,6 +1,6 @@
 branch-defaults:
   main:
-    environment: docker-react-learning-env-1
+    environment: docker-react-learning-nodejs
     group_suffix: null
 global:
   application_name: docker-react-learning
