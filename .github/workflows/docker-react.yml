@@ -33,3 +33,9 @@ jobs:
       # Step 4: Run tests inside the container
       - name: Run Tests
         run: docker run -e CI=true jessiechenqazwsx/docker-react-learning npm run test -- --coverage
+      
+      # Step 5: Push the Docker image to Docker Hub
+      - name: Push Docker Image
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker push jessiechenqazwsx/docker-react-learning
